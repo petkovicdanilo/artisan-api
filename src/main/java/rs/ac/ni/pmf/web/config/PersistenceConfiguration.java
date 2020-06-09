@@ -20,12 +20,11 @@ import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = { "rs.ac.ni.pmf.web.repository" }) // TODO: Change if necessary
+@EnableJpaRepositories(basePackages = { "rs.ac.ni.pmf.web.repository" })
 @PropertySource(value = "classpath:/application.properties")
 public class PersistenceConfiguration {
 
-	// TODO: Change if necessary
-	private static final String MODEL_PACKAGE = "rs.ac.ni.pmf.web.model.data";
+	private static final String MODEL_PACKAGE = "rs.ac.ni.pmf.web.model.entity";
 
 	@Bean(destroyMethod = "close")
 	public DataSource getDataSource(final Environment env) {
