@@ -1,8 +1,13 @@
 package rs.ac.ni.pmf.web.model.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AccessLevel;
@@ -34,4 +39,8 @@ public class WorkerEntity {
 	
 	@Column(name = "phone_number", length = 12)
 	private String phoneNumber;
+	
+	@Builder.Default
+	@OneToMany(mappedBy = "assignee", fetch = FetchType.LAZY)
+	private List<RepairEntity> assignedRepairs = new ArrayList<>();
 }
