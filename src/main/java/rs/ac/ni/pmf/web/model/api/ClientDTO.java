@@ -11,7 +11,7 @@ import lombok.Value;
 @AllArgsConstructor
 @Builder
 public class ClientDTO {
-	private int id;
+	private Integer id;
 	private String firstName;
 	private String lastName;
 	private String address;
