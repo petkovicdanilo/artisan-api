@@ -37,7 +37,7 @@ public class WorkerEntity {
 	@Column(name = "last_name", length = 32, nullable = false)
 	private String lastName;
 	
-	@Column(name = "phone_number", length = 12)
+	@Column(name = "phone_number", length = 15)
 	private String phoneNumber;
 	
 	@Builder.Default

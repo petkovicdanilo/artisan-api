@@ -39,7 +39,7 @@ public class ClientEntity {
 	@Column(length = 64)
 	private String address;
 	
-	@Column(name = "phone_number", length = 12)
+	@Column(name = "phone_number", length = 15)
 	private String phoneNumber;
 	
 	@Builder.Default

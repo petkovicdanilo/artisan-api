@@ -47,7 +47,7 @@ public class PartRepairEntity {
 	@Data
 	@AllArgsConstructor
 	public class PartRepairId implements Serializable {
-		private static final long serialVersionUID = 5284038231748169558L;
+		private static final long serialVersionUID = 1L;
 		
 		@Column(name = "part_id")
 		private int partId;
