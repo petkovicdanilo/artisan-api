@@ -48,5 +48,5 @@ public class RepairEntity {
 	
 	@Builder.Default
 	@OneToMany(mappedBy = "repair", fetch = FetchType.LAZY)
-	private List<PartRepairEntity> partRepairEntities = new ArrayList<>();
+	private List<ChangedPartEntity> partRepairEntities = new ArrayList<>();
 }

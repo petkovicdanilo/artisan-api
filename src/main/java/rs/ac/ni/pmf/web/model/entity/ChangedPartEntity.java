@@ -23,11 +23,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-@Table(name = "part_repair")
-public class PartRepairEntity {
+@Table(name = "changed_part")
+public class ChangedPartEntity {
 
 	@EmbeddedId
-	private PartRepairId partRepairId;
+	private ChangedPartId id;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "part_id")
@@ -46,7 +46,7 @@ public class PartRepairEntity {
 	@Embeddable
 	@Data
 	@AllArgsConstructor
-	public class PartRepairId implements Serializable {
+	public class ChangedPartId implements Serializable {
 		private static final long serialVersionUID = 1L;
 		
 		@Column(name = "part_id")
