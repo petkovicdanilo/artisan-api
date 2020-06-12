@@ -33,6 +33,8 @@ public class PartEntity {
 	@Column(length = 32)
 	private String name;
 	
+	private boolean used;
+	
 	@Builder.Default
 	@OneToMany(mappedBy = "part", fetch = FetchType.LAZY)
 	private List<ChangedPartEntity> partRepairEntities = new ArrayList<>();
