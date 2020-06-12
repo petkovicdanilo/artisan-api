@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import rs.ac.ni.pmf.web.controller.ClientsRestController;
 import rs.ac.ni.pmf.web.exception.DuplicateResourceException;
@@ -13,6 +14,7 @@ import rs.ac.ni.pmf.web.service.ClientsService;
 
 @RestController
 @RequiredArgsConstructor
+@Api(tags = "Clients")
 public class ClientsRestControllerImpl implements ClientsRestController {
 
 	private final ClientsService clientsService;
