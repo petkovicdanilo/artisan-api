@@ -1,7 +1,6 @@
 package rs.ac.ni.pmf.web.controller.impl;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
@@ -10,6 +9,7 @@ import rs.ac.ni.pmf.web.controller.WorkersRestController;
 import rs.ac.ni.pmf.web.exception.BadRequestException;
 import rs.ac.ni.pmf.web.exception.DuplicateResourceException;
 import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
+import rs.ac.ni.pmf.web.model.WorkersSearchOptions;
 import rs.ac.ni.pmf.web.model.api.WorkerDTO;
 import rs.ac.ni.pmf.web.service.WorkersService;
 
@@ -21,8 +21,8 @@ public class WorkersRestControllerImpl implements WorkersRestController {
 	private final WorkersService workersService;
 
 	@Override
-	public List<WorkerDTO> getWorkers() {
-		return workersService.getAll();
+	public Page<WorkerDTO> getWorkers(WorkersSearchOptions searchOptions) {
+		return workersService.getAll(searchOptions);
 	}
 
 	@Override

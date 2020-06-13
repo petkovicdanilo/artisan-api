@@ -1,15 +1,15 @@
 package rs.ac.ni.pmf.web.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
 import rs.ac.ni.pmf.web.exception.BadRequestException;
 import rs.ac.ni.pmf.web.exception.DuplicateResourceException;
 import rs.ac.ni.pmf.web.exception.ErrorInfo.ResourceType;
+import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
+import rs.ac.ni.pmf.web.model.WorkersSearchOptions;
 import rs.ac.ni.pmf.web.model.api.WorkerDTO;
 import rs.ac.ni.pmf.web.model.entity.WorkerEntity;
 import rs.ac.ni.pmf.web.model.mapper.WorkersMapper;
@@ -22,11 +22,23 @@ public class WorkersService {
 	private final WorkersRepository workersRepository;
 	private final WorkersMapper workersMapper;
 	
-	public List<WorkerDTO> getAll() {
+	public Page<WorkerDTO> getAll(final WorkersSearchOptions searchOptions) {
+		int page = 0;
+		int pageSize = 10;
+		
+		if(searchOptions.getPage() != null) {
+			page = searchOptions.getPage();
+		}
+		
+		if(searchOptions.getPageSize() != null) {			
+			pageSize = searchOptions.getPageSize();
+		}
+		
+		final PageRequest pageRequest = PageRequest.of(page, pageSize);
+		
 		return workersRepository
-				.findAll().stream()
-				.map(workersMapper::toDto)
-				.collect(Collectors.toList());
+				.findAll(pageRequest)
+				.map(workersMapper::toDto);
 	}
 	
 	public WorkerDTO getOne(final String username) throws ResourceNotFoundException {

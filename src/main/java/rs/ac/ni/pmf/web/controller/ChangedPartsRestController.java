@@ -1,7 +1,6 @@
 package rs.ac.ni.pmf.web.controller;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,14 +15,16 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import rs.ac.ni.pmf.web.exception.BadRequestException;
 import rs.ac.ni.pmf.web.exception.DuplicateResourceException;
 import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
+import rs.ac.ni.pmf.web.model.ChangedPartsSearchOptions;
 import rs.ac.ni.pmf.web.model.api.ChangedPartDTO;
 
 @RequestMapping(path = "/repairs/{repairId}/changedParts", produces = MediaType.APPLICATION_JSON_VALUE)
 public interface ChangedPartsRestController {
 
 	@GetMapping(path = "")
-	List<ChangedPartDTO> getChangedParts(
-		@PathVariable(name = "repairId", required = true) int repairId
+	Page<ChangedPartDTO> getChangedParts(
+		@PathVariable(name = "repairId", required = true) int repairId,
+		ChangedPartsSearchOptions searchOptions
 	)
 		throws ResourceNotFoundException;
 	

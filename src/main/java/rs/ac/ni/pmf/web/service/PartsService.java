@@ -1,13 +1,13 @@
 package rs.ac.ni.pmf.web.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import rs.ac.ni.pmf.web.exception.ErrorInfo.ResourceType;
 import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
+import rs.ac.ni.pmf.web.model.PartsSearchOptions;
 import rs.ac.ni.pmf.web.model.api.PartDTO;
 import rs.ac.ni.pmf.web.model.entity.PartEntity;
 import rs.ac.ni.pmf.web.model.mapper.PartsMapper;
@@ -20,10 +20,23 @@ public class PartsService {
 	private final PartsRepository partsRepository;
 	private final PartsMapper partsMapper;
 	
-	public List<PartDTO> getAll() {
-		return partsRepository.findAll().stream()
-				.map(partsMapper::toDto)
-				.collect(Collectors.toList());
+	public Page<PartDTO> getAll(final PartsSearchOptions searchOptions) {
+		int page = 0;
+		int pageSize = 10;
+		
+		if(searchOptions.getPage() != null) {
+			page = searchOptions.getPage();
+		}
+		
+		if(searchOptions.getPageSize() != null) {			
+			pageSize = searchOptions.getPageSize();
+		}
+		
+		final PageRequest pageRequest = PageRequest.of(page, pageSize);
+		
+		return partsRepository
+				.findAll(pageRequest)
+				.map(partsMapper::toDto);
 	}
 	
 	public PartDTO getOne(final int id) throws ResourceNotFoundException {

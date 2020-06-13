@@ -1,7 +1,6 @@
 package rs.ac.ni.pmf.web.controller;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,13 +15,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import rs.ac.ni.pmf.web.exception.BadRequestException;
 import rs.ac.ni.pmf.web.exception.DuplicateResourceException;
 import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
+import rs.ac.ni.pmf.web.model.WorkersSearchOptions;
 import rs.ac.ni.pmf.web.model.api.WorkerDTO;
 
 @RequestMapping(path = "/workers", produces = MediaType.APPLICATION_JSON_VALUE)
 public interface WorkersRestController {
 
 	@GetMapping(path = "")
-	List<WorkerDTO> getWorkers();
+	Page<WorkerDTO> getWorkers(WorkersSearchOptions searchOptions);
 
 	@GetMapping(path = "/{username}")
 	WorkerDTO getWorker(@PathVariable(name = "username", required = true) String username)

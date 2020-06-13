@@ -1,7 +1,6 @@
 package rs.ac.ni.pmf.web.controller.impl;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
@@ -10,6 +9,7 @@ import rs.ac.ni.pmf.web.controller.ChangedPartsRestController;
 import rs.ac.ni.pmf.web.exception.BadRequestException;
 import rs.ac.ni.pmf.web.exception.DuplicateResourceException;
 import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
+import rs.ac.ni.pmf.web.model.ChangedPartsSearchOptions;
 import rs.ac.ni.pmf.web.model.api.ChangedPartDTO;
 import rs.ac.ni.pmf.web.service.ChangedPartsService;
 
@@ -21,8 +21,13 @@ public class ChangedPartsRestControllerImpl implements ChangedPartsRestControlle
 	private final ChangedPartsService changedPartsService;
 	
 	@Override
-	public List<ChangedPartDTO> getChangedParts(int repairId) throws ResourceNotFoundException {
-		return changedPartsService.getAll(repairId);
+	public Page<ChangedPartDTO> getChangedParts(
+			int repairId, 
+			ChangedPartsSearchOptions searchOptions
+	)
+			throws ResourceNotFoundException {
+		
+		return changedPartsService.getAll(repairId, searchOptions);
 	}
 
 	@Override

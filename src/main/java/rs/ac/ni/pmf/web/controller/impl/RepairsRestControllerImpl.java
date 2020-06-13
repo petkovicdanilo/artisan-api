@@ -2,12 +2,14 @@ package rs.ac.ni.pmf.web.controller.impl;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import rs.ac.ni.pmf.web.controller.RepairsRestController;
 import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
+import rs.ac.ni.pmf.web.model.RepairsSearchOptions;
 import rs.ac.ni.pmf.web.model.api.RepairDTO;
 import rs.ac.ni.pmf.web.service.RepairsService;
 
@@ -19,8 +21,8 @@ public class RepairsRestControllerImpl implements RepairsRestController {
 	private final RepairsService repairsService;
 	
 	@Override
-	public List<RepairDTO> getRepairs() {
-		return repairsService.getAll();
+	public Page<RepairDTO> getRepairs(RepairsSearchOptions searchOptions) {
+		return repairsService.getAll(searchOptions);
 	}
 
 	@Override

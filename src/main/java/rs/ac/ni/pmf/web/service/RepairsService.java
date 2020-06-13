@@ -4,11 +4,14 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import rs.ac.ni.pmf.web.exception.ErrorInfo.ResourceType;
 import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
+import rs.ac.ni.pmf.web.model.RepairsSearchOptions;
 import rs.ac.ni.pmf.web.model.api.RepairDTO;
 import rs.ac.ni.pmf.web.model.entity.ClientEntity;
 import rs.ac.ni.pmf.web.model.entity.RepairEntity;
@@ -28,11 +31,23 @@ public class RepairsService {
 	private final ClientsRepository clientsRepository;
 	private final WorkersRepository workersRepository;
 	
-	public List<RepairDTO> getAll() {
-		return repairsRepository.findAll()
-				.stream()
-				.map(repairsMapper::toDto)
-				.collect(Collectors.toList());
+	public Page<RepairDTO> getAll(final RepairsSearchOptions searchOptions) {
+		int page = 0;
+		int pageSize = 10;
+		
+		if(searchOptions.getPage() != null) {
+			page = searchOptions.getPage();
+		}
+		
+		if(searchOptions.getPageSize() != null) {			
+			pageSize = searchOptions.getPageSize();
+		}
+		
+		final PageRequest pageRequest = PageRequest.of(page, pageSize);
+		
+		return repairsRepository
+				.findAll(pageRequest)
+				.map(repairsMapper::toDto);
 	}
 	
 	public RepairDTO getOne(int id) throws ResourceNotFoundException {

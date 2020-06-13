@@ -1,7 +1,6 @@
 package rs.ac.ni.pmf.web.controller;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,13 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
+import rs.ac.ni.pmf.web.model.PartsSearchOptions;
 import rs.ac.ni.pmf.web.model.api.PartDTO;
 
 @RequestMapping(path = "/parts", produces = MediaType.APPLICATION_JSON_VALUE)
 public interface PartsRestController {
 	
 	@GetMapping(path = "")
-	List<PartDTO> getParts();
+	Page<PartDTO> getParts(PartsSearchOptions searchOptions);
 	
 	@GetMapping(path = "/{id}")
 	PartDTO getPart(@PathVariable(name = "id", required = true) int id)

@@ -1,8 +1,7 @@
 package rs.ac.ni.pmf.web.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -10,6 +9,7 @@ import rs.ac.ni.pmf.web.exception.BadRequestException;
 import rs.ac.ni.pmf.web.exception.DuplicateResourceException;
 import rs.ac.ni.pmf.web.exception.ErrorInfo.ResourceType;
 import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
+import rs.ac.ni.pmf.web.model.ChangedPartsSearchOptions;
 import rs.ac.ni.pmf.web.model.api.ChangedPartDTO;
 import rs.ac.ni.pmf.web.model.entity.ChangedPartEntity;
 import rs.ac.ni.pmf.web.model.entity.ChangedPartEntity.ChangedPartId;
@@ -30,12 +30,30 @@ public class ChangedPartsService {
 	private final RepairsRepository repairsRepository;
 	private final PartsRepository partsRepository;
 	
-	public List<ChangedPartDTO> getAll(final int repairId) throws ResourceNotFoundException {
+	public Page<ChangedPartDTO> getAll(
+			final int repairId, 
+			final ChangedPartsSearchOptions searchOptions
+	)
+			throws ResourceNotFoundException {
+		
 		ensureRepairExists(repairId);
 		
-		return changedPartsRepository.findAllByRepairId(repairId).stream()
-				.map(changedPartsMapper::toDto)
-				.collect(Collectors.toList());
+		int page = 0;
+		int pageSize = 10;
+		
+		if(searchOptions.getPage() != null) {
+			page = searchOptions.getPage();
+		}
+		
+		if(searchOptions.getPageSize() != null) {			
+			pageSize = searchOptions.getPageSize();
+		}
+		
+		final PageRequest pageRequest = PageRequest.of(page, pageSize);
+		
+		return changedPartsRepository
+				.findAll(pageRequest)
+				.map(changedPartsMapper::toDto);
 	}
 	
 	public ChangedPartDTO getOne(final int repairId, final int partId) throws ResourceNotFoundException {

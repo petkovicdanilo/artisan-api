@@ -1,13 +1,13 @@
 package rs.ac.ni.pmf.web.controller.impl;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import rs.ac.ni.pmf.web.controller.PartsRestController;
 import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
+import rs.ac.ni.pmf.web.model.PartsSearchOptions;
 import rs.ac.ni.pmf.web.model.api.PartDTO;
 import rs.ac.ni.pmf.web.service.PartsService;
 
@@ -19,8 +19,8 @@ public class PartsRestControllerImpl implements PartsRestController {
 	private final PartsService partsService;
 	
 	@Override
-	public List<PartDTO> getParts() {
-		return partsService.getAll();
+	public Page<PartDTO> getParts(PartsSearchOptions searchOptions) {
+		return partsService.getAll(searchOptions);
 	}
 
 	@Override
