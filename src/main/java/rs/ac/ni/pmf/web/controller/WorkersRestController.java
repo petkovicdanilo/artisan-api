@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import rs.ac.ni.pmf.web.exception.BadRequestException;
 import rs.ac.ni.pmf.web.exception.DuplicateResourceException;
 import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
 import rs.ac.ni.pmf.web.model.api.WorkerDTO;
@@ -30,7 +31,7 @@ public interface WorkersRestController {
 	@PostMapping(path = "")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	WorkerDTO saveWorker(@RequestBody WorkerDTO worker) 
-		throws DuplicateResourceException;
+		throws BadRequestException, DuplicateResourceException;
 	
 	@PutMapping(path = "/{username}")
 	WorkerDTO updateWorker(
