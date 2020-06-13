@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import rs.ac.ni.pmf.web.exception.DuplicateResourceException;
 import rs.ac.ni.pmf.web.exception.ErrorInfo.ResourceType;
 import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
 import rs.ac.ni.pmf.web.model.api.PartDTO;
@@ -34,11 +33,8 @@ public class PartsService {
 		return partsMapper.toDto(partEntity);
 	}
 	
-	public PartDTO save(final PartDTO part) throws DuplicateResourceException {
-		if(partsRepository.existsById(part.getId())) {
-			throw new DuplicateResourceException(ResourceType.PART);
-		}
-		
+	public PartDTO save(final PartDTO part) {
+	
 		final PartEntity partEntity = partsMapper.toEntity(part);
 		partsRepository.save(partEntity);
 		

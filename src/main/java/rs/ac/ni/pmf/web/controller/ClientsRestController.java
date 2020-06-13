@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import rs.ac.ni.pmf.web.exception.DuplicateResourceException;
 import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
 import rs.ac.ni.pmf.web.model.api.ClientDTO;
 
@@ -29,8 +28,7 @@ public interface ClientsRestController {
 	
 	@PostMapping(path = "")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	ClientDTO saveClient(@RequestBody ClientDTO client)
-		throws DuplicateResourceException;
+	ClientDTO saveClient(@RequestBody ClientDTO client);
 	
 	@PutMapping(path = "/{id}")
 	ClientDTO updateClient(

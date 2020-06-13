@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import rs.ac.ni.pmf.web.controller.PartsRestController;
-import rs.ac.ni.pmf.web.exception.DuplicateResourceException;
 import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
 import rs.ac.ni.pmf.web.model.api.PartDTO;
 import rs.ac.ni.pmf.web.service.PartsService;
@@ -30,7 +29,7 @@ public class PartsRestControllerImpl implements PartsRestController {
 	}
 
 	@Override
-	public PartDTO savePart(PartDTO part) throws DuplicateResourceException {
+	public PartDTO savePart(PartDTO part) {
 		return partsService.save(part);
 	}
 

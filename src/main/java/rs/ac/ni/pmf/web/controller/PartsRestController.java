@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import rs.ac.ni.pmf.web.exception.DuplicateResourceException;
 import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
 import rs.ac.ni.pmf.web.model.api.PartDTO;
 
@@ -29,8 +28,7 @@ public interface PartsRestController {
 	
 	@PostMapping(path = "")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	PartDTO savePart(@RequestBody PartDTO part)
-		throws DuplicateResourceException;
+	PartDTO savePart(@RequestBody PartDTO part);
 	
 	@PutMapping(path = "/{id}")
 	PartDTO updatePart(

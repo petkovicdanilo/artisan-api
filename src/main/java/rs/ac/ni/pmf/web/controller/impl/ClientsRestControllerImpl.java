@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import rs.ac.ni.pmf.web.controller.ClientsRestController;
-import rs.ac.ni.pmf.web.exception.DuplicateResourceException;
 import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
 import rs.ac.ni.pmf.web.model.api.ClientDTO;
 import rs.ac.ni.pmf.web.service.ClientsService;
@@ -30,7 +29,7 @@ public class ClientsRestControllerImpl implements ClientsRestController {
 	}
 
 	@Override
-	public ClientDTO saveClient(ClientDTO client) throws DuplicateResourceException {
+	public ClientDTO saveClient(ClientDTO client) {
 		return clientsService.save(client);
 	}
 

@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import rs.ac.ni.pmf.web.exception.DuplicateResourceException;
 import rs.ac.ni.pmf.web.exception.ErrorInfo.ResourceType;
 import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
 import rs.ac.ni.pmf.web.model.api.ClientDTO;
@@ -36,10 +35,7 @@ public class ClientsService {
 		return clientsMapper.toDto(clientEntity);
 	}
 	
-	public ClientDTO save(final ClientDTO client) throws DuplicateResourceException {
-		if(clientsRepository.existsById(client.getId())) {
-			throw new DuplicateResourceException(ResourceType.CLIENT);
-		}
+	public ClientDTO save(final ClientDTO client) {
 		
 		final ClientEntity clientEntity = clientsMapper.toEntity(client);
 		clientsRepository.save(clientEntity);
