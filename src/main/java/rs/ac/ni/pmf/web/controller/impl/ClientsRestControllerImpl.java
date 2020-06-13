@@ -1,13 +1,13 @@
 package rs.ac.ni.pmf.web.controller.impl;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import rs.ac.ni.pmf.web.controller.ClientsRestController;
 import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
+import rs.ac.ni.pmf.web.model.ClientsSearchOptions;
 import rs.ac.ni.pmf.web.model.api.ClientDTO;
 import rs.ac.ni.pmf.web.service.ClientsService;
 
@@ -19,8 +19,8 @@ public class ClientsRestControllerImpl implements ClientsRestController {
 	private final ClientsService clientsService;
 	
 	@Override
-	public List<ClientDTO> getClients() {
-		return clientsService.getAll();
+	public Page<ClientDTO> getClients(ClientsSearchOptions searchOptions) {
+		return clientsService.getAll(searchOptions);
 	}
 
 	@Override
