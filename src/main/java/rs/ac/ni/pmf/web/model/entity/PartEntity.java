@@ -27,10 +27,10 @@ import lombok.NoArgsConstructor;
 public class PartEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(length = 32)
+	@Column(length = 64)
 	private String name;
 	
 	private boolean used;

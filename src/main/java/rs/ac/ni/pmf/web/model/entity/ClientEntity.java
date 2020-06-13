@@ -27,19 +27,19 @@ import lombok.NoArgsConstructor;
 public class ClientEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "first_name", length = 32, nullable = false)
+	@Column(name = "first_name", length = 64, nullable = false)
 	private String firstName;
 	
-	@Column(name = "last_name", length = 32, nullable = false)
+	@Column(name = "last_name", length = 64, nullable = false)
 	private String lastName;
 	
 	@Column(length = 64)
 	private String address;
 	
-	@Column(name = "phone_number", length = 15)
+	@Column(name = "phone_number", length = 64)
 	private String phoneNumber;
 	
 	@Builder.Default
