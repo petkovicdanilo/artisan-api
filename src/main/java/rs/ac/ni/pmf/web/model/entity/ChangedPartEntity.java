@@ -46,7 +46,8 @@ public class ChangedPartEntity {
 	@Embeddable
 	@Data
 	@AllArgsConstructor
-	public class ChangedPartId implements Serializable {
+	@NoArgsConstructor
+	public static class ChangedPartId implements Serializable {
 		private static final long serialVersionUID = 1L;
 		
 		@Column(name = "part_id")
