@@ -36,5 +36,5 @@ public class PartEntity {
 	
 	@Builder.Default
 	@OneToMany(mappedBy = "part", fetch = FetchType.LAZY)
-	private List<ChangedPartEntity> partRepairEntities = new ArrayList<>();
+	private List<ChangedPartEntity> changedPartsEntities = new ArrayList<>();
 }

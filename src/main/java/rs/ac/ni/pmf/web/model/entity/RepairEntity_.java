@@ -14,5 +14,5 @@ public class RepairEntity_ {
 	public static volatile SingularAttribute<RepairEntity, Timestamp> reported;
 	public static volatile SingularAttribute<RepairEntity, Timestamp> finished;
 	
-	public static volatile ListAttribute<RepairEntity, ChangedPartEntity> partRepairEntities;
+	public static volatile ListAttribute<RepairEntity, ChangedPartEntity> changedPartsEntities;
 }

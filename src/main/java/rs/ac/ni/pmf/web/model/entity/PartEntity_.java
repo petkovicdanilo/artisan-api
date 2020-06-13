@@ -10,5 +10,5 @@ public class PartEntity_ {
 	public static volatile SingularAttribute<PartEntity, String> name;
 	public static volatile SingularAttribute<PartEntity, Boolean> used;
 	
-	public static volatile ListAttribute<PartEntity, ChangedPartEntity> partRepairEntities;
+	public static volatile ListAttribute<PartEntity, ChangedPartEntity> changedPartsEntities;
 }
