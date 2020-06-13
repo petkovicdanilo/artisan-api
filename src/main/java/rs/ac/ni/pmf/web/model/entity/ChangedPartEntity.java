@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-@Table(name = "changed_part")
+@Table(name = "changed_parts")
 public class ChangedPartEntity {
 
 	@EmbeddedId
