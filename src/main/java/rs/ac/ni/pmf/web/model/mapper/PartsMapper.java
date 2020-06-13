@@ -17,7 +17,6 @@ public class PartsMapper {
 	
 	public PartEntity toEntity(PartDTO partDto) {
 		return PartEntity.builder()
-				.id(partDto.getId())
 				.name(partDto.getName())
 				.used(partDto.isUsed())
 				.build();

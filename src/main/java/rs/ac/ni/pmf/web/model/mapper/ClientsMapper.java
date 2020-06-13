@@ -20,7 +20,6 @@ public class ClientsMapper {
 	
 	public ClientEntity toEntity(final ClientDTO clientDto) {
 		return ClientEntity.builder()
-				.id(clientDto.getId())
 				.firstName(clientDto.getFirstName())
 				.lastName(clientDto.getLastName())
 				.address(clientDto.getAddress())
