@@ -13,11 +13,12 @@ public class ErrorInfo {
 	private String message;
 	
 	public enum ErrorType {
+		DUPLICATE,
 		NOT_FOUND,
-		DUPLICATE
 	}
 	
 	public enum ResourceType {
+		CHANGED_PART,
 		CLIENT,
 		PART,
 		REPAIR,
