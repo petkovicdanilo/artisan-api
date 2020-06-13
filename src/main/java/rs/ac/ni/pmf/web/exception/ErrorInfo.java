@@ -20,6 +20,7 @@ public class ErrorInfo {
 	public enum ResourceType {
 		CLIENT,
 		PART,
+		REPAIR,
 		WORKER,
 	}
 }
