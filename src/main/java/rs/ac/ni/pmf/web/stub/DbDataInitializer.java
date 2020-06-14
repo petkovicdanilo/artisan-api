@@ -103,6 +103,7 @@
 //		
 //		RepairDTO repair1 = RepairDTO.builder()
 //				.failureDescription("Failure description 1")
+//				.additionalCost(0)
 //				.clientId(client1.getId())
 //				.assigneeUsername(worker1.getUsername())
 //				.reported(new Date())
@@ -110,6 +111,7 @@
 //		
 //		RepairDTO repair2 = RepairDTO.builder()
 //				.failureDescription("Failure description 2")
+//				.additionalCost(1000)
 //				.clientId(client1.getId())
 //				.assigneeUsername(worker2.getUsername())
 //				.reported(new Date())
@@ -118,6 +120,7 @@
 //		
 //		RepairDTO repair3 = RepairDTO.builder()
 //				.failureDescription("Failure description 3")
+//				.additionalCost(2000)
 //				.clientId(client2.getId())
 //				.assigneeUsername(worker1.getUsername())
 //				.reported(new Date())

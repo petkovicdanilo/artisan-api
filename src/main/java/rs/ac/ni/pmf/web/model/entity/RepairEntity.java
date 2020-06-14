@@ -36,6 +36,9 @@ public class RepairEntity {
 	@Column(name = "failure_description", length = 64)
 	private String failureDescription;
 	
+	@Column(name = "additional_cost", nullable = false)
+	private double additionalCost;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "assignee_username", nullable = true)
 	private WorkerEntity assignee;

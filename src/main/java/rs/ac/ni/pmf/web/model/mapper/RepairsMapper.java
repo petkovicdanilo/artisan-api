@@ -25,6 +25,7 @@ public class RepairsMapper {
 		return RepairDTO.builder()
 				.id(repairEntity.getId())
 				.failureDescription(repairEntity.getFailureDescription())
+				.additionalCost(repairEntity.getAdditionalCost())
 				.clientId(clientId)
 				.assigneeUsername(assigneeUsername)
 				.reported(repairEntity.getReported())
@@ -45,6 +46,7 @@ public class RepairsMapper {
 		
 		return RepairEntity.builder()
 				.failureDescription(repairDTO.getFailureDescription())
+				.additionalCost(repairDTO.getAdditionalCost())
 				.client(clientEntity)
 				.assignee(assigneeEntity)
 				.reported(new Timestamp(repairDTO.getReported().getTime()))

@@ -19,6 +19,7 @@ import lombok.Value;
 public class RepairDTO {
 	private Integer id;
 	private String failureDescription;
+	private double additionalCost;
 	private String assigneeUsername;
 	private Integer clientId;
 	@JsonFormat(shape = Shape.STRING, pattern = "dd.MM.yyyy. HH:mm:ss")

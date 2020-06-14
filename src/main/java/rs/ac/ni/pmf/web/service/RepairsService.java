@@ -95,8 +95,13 @@ public class RepairsService {
 		RepairEntity repairEntity = repairsRepository.findById(id)
 				.orElseThrow(()-> new ResourceNotFoundException(ResourceType.REPAIR));
 		
+		repairEntity.setFailureDescription(repair.getFailureDescription());
+		repairEntity.setAdditionalCost(repair.getAdditionalCost());
+		
 		repairEntity.setReported(new Timestamp(repair.getReported().getTime()));
-		repairEntity.setFinished(new Timestamp(repair.getFinished().getTime()));
+		if(repair.getFinished() != null) {
+			repairEntity.setFinished(new Timestamp(repair.getFinished().getTime()));
+		}
 		
 		if(repairEntity.getAssignee().getUsername() != repair.getAssigneeUsername()) {
 			WorkerEntity assignee = workersRepository.findById(repair.getAssigneeUsername())
