@@ -53,4 +53,8 @@ public interface RepairsRestController {
 	void deleteRepair(@PathVariable(name = "id", required = true) int id)
 		throws ResourceNotFoundException;
 	
+	@GetMapping(path = "/repairs/{id}/price")
+	double getRepairPrice(@PathVariable(name = "id", required = true) int id)
+		throws ResourceNotFoundException;
+	
 }

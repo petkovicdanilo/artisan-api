@@ -4,8 +4,18 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Root;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -13,8 +23,11 @@ import rs.ac.ni.pmf.web.exception.ErrorInfo.ResourceType;
 import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
 import rs.ac.ni.pmf.web.model.RepairsSearchOptions;
 import rs.ac.ni.pmf.web.model.api.RepairDTO;
+import rs.ac.ni.pmf.web.model.entity.ChangedPartEntity;
+import rs.ac.ni.pmf.web.model.entity.ChangedPartEntity_;
 import rs.ac.ni.pmf.web.model.entity.ClientEntity;
 import rs.ac.ni.pmf.web.model.entity.RepairEntity;
+import rs.ac.ni.pmf.web.model.entity.RepairEntity_;
 import rs.ac.ni.pmf.web.model.entity.WorkerEntity;
 import rs.ac.ni.pmf.web.model.mapper.RepairsMapper;
 import rs.ac.ni.pmf.web.repository.ClientsRepository;
@@ -31,6 +44,9 @@ public class RepairsService {
 	private final ClientsRepository clientsRepository;
 	private final WorkersRepository workersRepository;
 	
+	@PersistenceContext
+	private EntityManager entityManager;
+	
 	public Page<RepairDTO> getAll(final RepairsSearchOptions searchOptions) {
 		int page = 0;
 		int pageSize = 10;
@@ -43,7 +59,11 @@ public class RepairsService {
 			pageSize = searchOptions.getPageSize();
 		}
 		
-		final PageRequest pageRequest = PageRequest.of(page, pageSize);
+		final PageRequest pageRequest = PageRequest.of(
+			page, 
+			pageSize, 
+			Sort.by(Sort.Direction.DESC, "reported")
+		);
 		
 		return repairsRepository
 				.findAll(pageRequest)
@@ -128,6 +148,36 @@ public class RepairsService {
 		}
 		
 		repairsRepository.deleteById(id);
+	}
+	
+	public double getPrice(int id) throws ResourceNotFoundException {
+		RepairEntity repair = repairsRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException(ResourceType.REPAIR));
+		
+		final CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		final CriteriaQuery<Double> cq = cb.createQuery(Double.class);
+
+		final Root<ChangedPartEntity> root = cq.from(ChangedPartEntity.class);
+		final Path<Double> price = root.get(ChangedPartEntity_.price);
+		
+		final Join<ChangedPartEntity, RepairEntity> changedPartsJoin = 
+				root.join(ChangedPartEntity_.repair, JoinType.INNER);
+
+		final Path<Integer> repairId = changedPartsJoin.get(RepairEntity_.id);
+
+		cq.select(cb.sum(price));
+		cq.where(cb.equal(repairId, id));
+		
+		double totalPrice = 0;
+		
+		Double partsPrice = entityManager.createQuery(cq).getSingleResult();
+		if(partsPrice != null) {
+			totalPrice += partsPrice;
+		}
+		
+		totalPrice += repair.getAdditionalCost();
+		
+		return totalPrice;
 	}
 	
 }

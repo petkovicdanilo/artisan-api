@@ -55,4 +55,9 @@ public class RepairsRestControllerImpl implements RepairsRestController {
 		repairsService.delete(id);
 	}
 
+	@Override
+	public double getRepairPrice(int id) throws ResourceNotFoundException {
+		return repairsService.getPrice(id);
+	}
+
 }
