@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -15,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 import rs.ac.ni.pmf.web.model.ClientsSearchOptions;
 import rs.ac.ni.pmf.web.model.entity.ClientEntity;
 import rs.ac.ni.pmf.web.model.entity.ClientEntity_;
+import rs.ac.ni.pmf.web.model.entity.RepairEntity;
+import rs.ac.ni.pmf.web.model.entity.RepairEntity_;
 
 @RequiredArgsConstructor
 public class ClientsSearchSpecification implements Specification<ClientEntity> {
@@ -27,6 +31,7 @@ public class ClientsSearchSpecification implements Specification<ClientEntity> {
 	public Predicate toPredicate(Root<ClientEntity> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
 		final List<Predicate> predicates = new ArrayList<>();
 		
+		final Path<Integer> id = root.get(ClientEntity_.id);
 		final Path<String> firstName = root.get(ClientEntity_.firstName);
 		final Path<String> lastName = root.get(ClientEntity_.lastName);
 		final Path<String> address = root.get(ClientEntity_.address);
@@ -62,6 +67,31 @@ public class ClientsSearchSpecification implements Specification<ClientEntity> {
 				criteriaBuilder.lower(phoneNumber),
 				"%" + phoneNumberFilter.toLowerCase() + "%"
 			));
+		}
+		
+		final Integer minRepairsFilter = searchOptions.getMinRepairs();
+		final Integer maxRepairsFilter = searchOptions.getMaxRepairs();
+		
+		Join<ClientEntity, RepairEntity> repairsJoin = null;
+		
+		Path<Integer> repairId = null;
+		
+		if(minRepairsFilter != null || maxRepairsFilter != null) {
+			repairsJoin = root.join(ClientEntity_.repairs, JoinType.LEFT);
+			repairId = repairsJoin.get(RepairEntity_.id);
+			query.groupBy(id);
+		}
+		
+		if(minRepairsFilter != null) {
+			query.having(
+				criteriaBuilder.ge(criteriaBuilder.count(repairId), minRepairsFilter)
+			);
+		}
+		
+		if(maxRepairsFilter != null) {
+			query.having(
+				criteriaBuilder.le(criteriaBuilder.count(repairId), maxRepairsFilter)
+			);
 		}
 		
 		return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));

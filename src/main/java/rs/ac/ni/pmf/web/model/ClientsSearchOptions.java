@@ -15,6 +15,9 @@ public class ClientsSearchOptions {
 	private String lastName;
 	private String phoneNumber;
 	
+	private Integer minRepairs;
+	private Integer maxRepairs;
+	
 	private Integer page;
 	private Integer pageSize;
 }
