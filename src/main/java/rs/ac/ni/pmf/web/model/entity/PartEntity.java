@@ -3,6 +3,7 @@ package rs.ac.ni.pmf.web.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,6 +36,10 @@ public class PartEntity {
 	private boolean used;
 	
 	@Builder.Default
-	@OneToMany(mappedBy = "part", fetch = FetchType.LAZY)
+	@OneToMany(
+		mappedBy = "part", 
+		fetch = FetchType.LAZY,
+		cascade = CascadeType.ALL,
+		orphanRemoval = true)
 	private List<ChangedPartEntity> changedPartsEntities = new ArrayList<>();
 }

@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,12 +33,15 @@ public class RepairEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
+	@Column(name = "failure_description", length = 64)
+	private String failureDescription;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "assignee_username")
+	@JoinColumn(name = "assignee_username", nullable = true)
 	private WorkerEntity assignee;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "client_id", nullable = false)
+	@JoinColumn(name = "client_id", nullable = true)
 	private ClientEntity client;
 	
 	@Column(nullable = false)
@@ -46,6 +50,10 @@ public class RepairEntity {
 	private Timestamp finished;
 	
 	@Builder.Default
-	@OneToMany(mappedBy = "repair", fetch = FetchType.LAZY)
+	@OneToMany(
+		mappedBy = "repair", 
+		fetch = FetchType.LAZY,
+		cascade = CascadeType.ALL,
+		orphanRemoval = true)
 	private List<ChangedPartEntity> changedPartsEntities = new ArrayList<>();
 }

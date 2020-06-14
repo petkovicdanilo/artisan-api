@@ -3,11 +3,13 @@ package rs.ac.ni.pmf.web.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -40,6 +42,17 @@ public class WorkerEntity {
 	private String phoneNumber;
 	
 	@Builder.Default
-	@OneToMany(mappedBy = "assignee", fetch = FetchType.LAZY)
+	@OneToMany(
+		mappedBy = "assignee",
+		fetch = FetchType.LAZY,
+		cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST },
+		orphanRemoval = false)
 	private List<RepairEntity> assignedRepairs = new ArrayList<>();
+	
+	@PreRemove
+	private void preRemove() {
+		for(RepairEntity repair : assignedRepairs) {
+			repair.setAssignee(null);
+		}
+	}
 }
