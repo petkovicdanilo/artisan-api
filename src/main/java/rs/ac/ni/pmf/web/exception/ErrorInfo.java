@@ -13,6 +13,7 @@ public class ErrorInfo {
 	private String message;
 	
 	public enum ErrorType {
+		BAD_REQUEST,
 		DUPLICATE,
 		NOT_FOUND,
 	}

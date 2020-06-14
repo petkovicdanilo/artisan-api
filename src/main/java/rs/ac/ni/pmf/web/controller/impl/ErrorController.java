@@ -20,7 +20,7 @@ public class ErrorController {
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	public ErrorInfo handleBadRequestException(final BadRequestException e) {
 		return ErrorInfo.builder()
-				.errorType(ErrorType.NOT_FOUND)
+				.errorType(ErrorType.BAD_REQUEST)
 				.message(e.getMessage())
 				.build();
 	}
