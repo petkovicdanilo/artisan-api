@@ -10,6 +10,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WorkersSearchOptions {
+	private String username;
+	private String email;
+	private String firstName;
+	private String lastName;
+	private String phoneNumber;
+	
+	private Integer minRepairs;
+	private Integer maxRepairs;
+	
 	private Integer page;
 	private Integer pageSize;
 }

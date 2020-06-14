@@ -14,6 +14,7 @@ import rs.ac.ni.pmf.web.model.api.WorkerDTO;
 import rs.ac.ni.pmf.web.model.entity.WorkerEntity;
 import rs.ac.ni.pmf.web.model.mapper.WorkersMapper;
 import rs.ac.ni.pmf.web.repository.WorkersRepository;
+import rs.ac.ni.pmf.web.repository.specification.WorkersSearchSpecification;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +38,10 @@ public class WorkersService {
 		final PageRequest pageRequest = PageRequest.of(page, pageSize);
 		
 		return workersRepository
-				.findAll(pageRequest)
+				.findAll(
+					new WorkersSearchSpecification(searchOptions),
+					pageRequest
+				)
 				.map(workersMapper::toDto);
 	}
 	
