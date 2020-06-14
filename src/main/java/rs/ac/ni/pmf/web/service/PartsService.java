@@ -12,6 +12,7 @@ import rs.ac.ni.pmf.web.model.api.PartDTO;
 import rs.ac.ni.pmf.web.model.entity.PartEntity;
 import rs.ac.ni.pmf.web.model.mapper.PartsMapper;
 import rs.ac.ni.pmf.web.repository.PartsRepository;
+import rs.ac.ni.pmf.web.repository.specification.PartsSearchSpecification;
 
 @Service
 @RequiredArgsConstructor
@@ -35,7 +36,9 @@ public class PartsService {
 		final PageRequest pageRequest = PageRequest.of(page, pageSize);
 		
 		return partsRepository
-				.findAll(pageRequest)
+				.findAll(
+					new PartsSearchSpecification(searchOptions),
+					pageRequest)
 				.map(partsMapper::toDto);
 	}
 	
