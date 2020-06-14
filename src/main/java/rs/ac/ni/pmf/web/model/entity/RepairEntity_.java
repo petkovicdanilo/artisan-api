@@ -9,6 +9,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(RepairEntity.class)
 public class RepairEntity_ {
 	public static volatile SingularAttribute<RepairEntity, Integer> id;
+	public static volatile SingularAttribute<RepairEntity, String> failureDescription;
 	public static volatile SingularAttribute<RepairEntity, WorkerEntity> assignee;
 	public static volatile SingularAttribute<RepairEntity, ClientEntity> client;
 	public static volatile SingularAttribute<RepairEntity, Timestamp> reported;

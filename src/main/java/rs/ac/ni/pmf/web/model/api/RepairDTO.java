@@ -18,8 +18,9 @@ import lombok.Value;
 @Builder
 public class RepairDTO {
 	private Integer id;
+	private String failureDescription;
 	private String assigneeUsername;
-	private int clientId;
+	private Integer clientId;
 	@JsonFormat(shape = Shape.STRING, pattern = "dd.MM.yyyy. HH:mm:ss")
 	private Date reported;
 	@JsonFormat(shape = Shape.STRING, pattern = "dd.MM.yyyy. HH:mm:ss")
