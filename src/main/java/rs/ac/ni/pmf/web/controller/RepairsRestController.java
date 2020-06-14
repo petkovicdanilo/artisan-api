@@ -1,7 +1,5 @@
 package rs.ac.ni.pmf.web.controller;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,13 +27,15 @@ public interface RepairsRestController {
 		throws ResourceNotFoundException;
 	
 	@GetMapping(path = "/clients/{clientId}/repairs")
-	List<RepairDTO> getRepairsByClientId(
-			@PathVariable(name = "clientId", required = true) int clientId)
+	Page<RepairDTO> getRepairsByClientId(
+			@PathVariable(name = "clientId", required = true) int clientId,
+			RepairsSearchOptions searchOptions)
 		throws ResourceNotFoundException;
 	
 	@GetMapping(path = "/workers/{assigneeUsername}/repairs")
-	List<RepairDTO> getRepairsByAssigneeUsername(
-			@PathVariable(name = "assigneeUsername", required = true) String assigneeUsername)
+	Page<RepairDTO> getRepairsByAssigneeUsername(
+			@PathVariable(name = "assigneeUsername", required = true) String assigneeUsername,
+			RepairsSearchOptions searchOptions)
 		throws ResourceNotFoundException;
 	
 	@PostMapping(path = "/repairs")

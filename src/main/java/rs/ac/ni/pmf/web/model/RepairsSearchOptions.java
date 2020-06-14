@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RepairsSearchOptions {
+	private Double minAdditionalCost;
+	private Double maxAdditionalCost;
+	
 	private Integer page;
 	private Integer pageSize;
 }

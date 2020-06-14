@@ -1,7 +1,5 @@
 package rs.ac.ni.pmf.web.controller.impl;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,13 +29,23 @@ public class RepairsRestControllerImpl implements RepairsRestController {
 	}
 
 	@Override
-	public List<RepairDTO> getRepairsByClientId(int clientId) throws ResourceNotFoundException {
-		return repairsService.getAllByClientId(clientId);
+	public Page<RepairDTO> getRepairsByClientId(
+		int clientId,
+		RepairsSearchOptions searchOptions
+	) 
+		throws ResourceNotFoundException {
+		
+		return repairsService.getAllByClientId(clientId, searchOptions);
 	}
 	
 	@Override
-	public List<RepairDTO> getRepairsByAssigneeUsername(String assigneeUsername) throws ResourceNotFoundException {
-		return repairsService.getAllByAssigneeUsername(assigneeUsername);
+	public Page<RepairDTO> getRepairsByAssigneeUsername(
+		String assigneeUsername,
+		RepairsSearchOptions searchOptions
+	)
+		throws ResourceNotFoundException {
+		
+		return repairsService.getAllByAssigneeUsername(assigneeUsername, searchOptions);
 	}
 
 	@Override

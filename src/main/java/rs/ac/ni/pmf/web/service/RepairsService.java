@@ -1,8 +1,6 @@
 package rs.ac.ni.pmf.web.service;
 
 import java.sql.Timestamp;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -33,6 +31,9 @@ import rs.ac.ni.pmf.web.model.mapper.RepairsMapper;
 import rs.ac.ni.pmf.web.repository.ClientsRepository;
 import rs.ac.ni.pmf.web.repository.RepairsRepository;
 import rs.ac.ni.pmf.web.repository.WorkersRepository;
+import rs.ac.ni.pmf.web.repository.specification.RepairsByAssigneeUsernameSearchSpecification;
+import rs.ac.ni.pmf.web.repository.specification.RepairsByClientSearchSpecification;
+import rs.ac.ni.pmf.web.repository.specification.RepairsSearchSpecification;
 
 @Service
 @RequiredArgsConstructor
@@ -66,7 +67,7 @@ public class RepairsService {
 		);
 		
 		return repairsRepository
-				.findAll(pageRequest)
+				.findAll(new RepairsSearchSpecification(searchOptions), pageRequest)
 				.map(repairsMapper::toDto);
 	}
 	
@@ -77,24 +78,74 @@ public class RepairsService {
 		return repairsMapper.toDto(repairEntity);
 	}
 	
-	public List<RepairDTO> getAllByClientId(int clientId) throws ResourceNotFoundException {
+	public Page<RepairDTO> getAllByClientId(
+		int clientId,
+		RepairsSearchOptions searchOptions
+	) 
+		throws ResourceNotFoundException {
+		
 		if(!clientsRepository.existsById(clientId)) {
 			throw new ResourceNotFoundException(ResourceType.CLIENT);
 		}
 		
-		return repairsRepository.findByClientId(clientId).stream()
-				.map(repairsMapper::toDto)
-				.collect(Collectors.toList());
+		int page = 0;
+		int pageSize = 10;
+		
+		if(searchOptions.getPage() != null) {
+			page = searchOptions.getPage();
+		}
+		
+		if(searchOptions.getPageSize() != null) {			
+			pageSize = searchOptions.getPageSize();
+		}
+		
+		final PageRequest pageRequest = PageRequest.of(
+			page, 
+			pageSize, 
+			Sort.by(Sort.Direction.DESC, "reported")
+		);
+		
+		return repairsRepository
+				.findAll(
+					new RepairsByClientSearchSpecification(searchOptions, clientId),
+					pageRequest
+				)
+				.map(repairsMapper::toDto);
 	}
 	
-	public List<RepairDTO> getAllByAssigneeUsername(String assigneeUsername) throws ResourceNotFoundException {
+	public Page<RepairDTO> getAllByAssigneeUsername(
+		String assigneeUsername,
+		RepairsSearchOptions searchOptions
+	) 
+		throws ResourceNotFoundException {
+		
 		if(!workersRepository.existsById(assigneeUsername)) {
 			throw new ResourceNotFoundException(ResourceType.WORKER);
 		}
+
+		int page = 0;
+		int pageSize = 10;
 		
-		return repairsRepository.findByAssigneeUsername(assigneeUsername).stream()
-				.map(repairsMapper::toDto)
-				.collect(Collectors.toList());
+		if(searchOptions.getPage() != null) {
+			page = searchOptions.getPage();
+		}
+		
+		if(searchOptions.getPageSize() != null) {			
+			pageSize = searchOptions.getPageSize();
+		}
+		
+		final PageRequest pageRequest = PageRequest.of(
+			page, 
+			pageSize, 
+			Sort.by(Sort.Direction.DESC, "reported")
+		);
+		
+		return repairsRepository
+				.findAll(
+					new RepairsByAssigneeUsernameSearchSpecification(searchOptions, assigneeUsername),
+					pageRequest
+				)
+				.map(repairsMapper::toDto);
 	}
 	
 	public RepairDTO save(RepairDTO repair) throws ResourceNotFoundException {
