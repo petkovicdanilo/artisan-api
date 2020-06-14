@@ -55,8 +55,7 @@ public class ChangedPartsService {
 		return changedPartsRepository
 				.findAll(
 					new ChangedPartsSearchSpecification(repairId, searchOptions),
-					pageRequest
-				)
+					pageRequest)
 				.map(changedPartsMapper::toDto);
 	}
 	

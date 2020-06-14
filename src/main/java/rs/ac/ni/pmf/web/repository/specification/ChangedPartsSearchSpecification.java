@@ -9,10 +9,12 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 
 import lombok.RequiredArgsConstructor;
 import rs.ac.ni.pmf.web.model.ChangedPartsSearchOptions;
+import rs.ac.ni.pmf.web.model.ChangedPartsSearchOptions.SortByField;
 import rs.ac.ni.pmf.web.model.entity.ChangedPartEntity;
 import rs.ac.ni.pmf.web.model.entity.ChangedPartEntity_;
 import rs.ac.ni.pmf.web.model.entity.RepairEntity;
@@ -56,6 +58,28 @@ public class ChangedPartsSearchSpecification implements Specification<ChangedPar
 		final Double maxPriceFilter = searchOptions.getMaxPrice();
 		if(maxPriceFilter != null) {
 			predicates.add(criteriaBuilder.le(price, maxPriceFilter));
+		}
+		
+		final SortByField sortBy = searchOptions.getSortBy();
+		if(sortBy != null) {
+			Path<?> propertyToSortBy = null;
+			
+			switch (sortBy) {
+				case count:
+					propertyToSortBy = count;
+					break;
+				case price:
+					propertyToSortBy = price;
+					break;
+			}
+			
+			Direction sortDirection = searchOptions.getSortDirection();
+			if(sortDirection == null || sortDirection == Direction.ASC) {
+				query.orderBy(criteriaBuilder.asc(propertyToSortBy));
+			}
+			else {
+				query.orderBy(criteriaBuilder.desc(propertyToSortBy));
+			}
 		}
 		
 		return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
