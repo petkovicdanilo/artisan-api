@@ -10,6 +10,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChangedPartsSearchOptions {
+	private Integer minCount;
+	private Integer maxCount;
+	
+	private Double minPrice;
+	private Double maxPrice;
+	
 	private Integer page;
 	private Integer pageSize;
 }

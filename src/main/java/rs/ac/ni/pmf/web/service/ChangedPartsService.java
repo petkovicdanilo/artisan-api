@@ -19,6 +19,7 @@ import rs.ac.ni.pmf.web.model.mapper.ChangedPartsMapper;
 import rs.ac.ni.pmf.web.repository.ChangedPartsRepository;
 import rs.ac.ni.pmf.web.repository.PartsRepository;
 import rs.ac.ni.pmf.web.repository.RepairsRepository;
+import rs.ac.ni.pmf.web.repository.specification.ChangedPartsSearchSpecification;
 
 @Service
 @RequiredArgsConstructor
@@ -52,7 +53,10 @@ public class ChangedPartsService {
 		final PageRequest pageRequest = PageRequest.of(page, pageSize);
 		
 		return changedPartsRepository
-				.findAll(pageRequest)
+				.findAll(
+					new ChangedPartsSearchSpecification(repairId, searchOptions),
+					pageRequest
+				)
 				.map(changedPartsMapper::toDto);
 	}
 	
