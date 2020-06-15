@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import rs.ac.ni.pmf.web.controller.WorkersRestController;
-import rs.ac.ni.pmf.web.exception.BadRequestException;
 import rs.ac.ni.pmf.web.exception.DuplicateResourceException;
 import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
 import rs.ac.ni.pmf.web.model.WorkersSearchOptions;
@@ -32,7 +31,7 @@ public class WorkersRestControllerImpl implements WorkersRestController {
 	}
 
 	@Override
-	public WorkerDTO saveWorker(WorkerSaveDTO worker) throws BadRequestException, DuplicateResourceException {
+	public WorkerDTO saveWorker(WorkerSaveDTO worker) throws DuplicateResourceException {
 		return workersService.save(worker);
 	}
 

@@ -5,7 +5,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import rs.ac.ni.pmf.web.exception.BadRequestException;
 import rs.ac.ni.pmf.web.exception.DuplicateResourceException;
 import rs.ac.ni.pmf.web.exception.ErrorInfo.ResourceType;
 import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
@@ -58,11 +57,7 @@ public class WorkersService {
 		return workersMapper.toDto(workerEntity);
 	}
 	
-	public WorkerDTO save(final WorkerSaveDTO worker) throws BadRequestException, DuplicateResourceException {
-		if(worker.getUsername() == null) {
-			throw new BadRequestException("Bad request");
-		}
-		
+	public WorkerDTO save(final WorkerSaveDTO worker) throws DuplicateResourceException {
 		
 		if(workersRepository.existsById(worker.getUsername())) {
 			throw new DuplicateResourceException(ResourceType.WORKER);
