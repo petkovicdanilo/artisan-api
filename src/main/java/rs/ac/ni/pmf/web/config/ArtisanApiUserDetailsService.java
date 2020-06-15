@@ -1,7 +1,8 @@
 package rs.ac.ni.pmf.web.config;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -38,7 +39,13 @@ public class ArtisanApiUserDetailsService implements UserDetailsService {
 		
 		@Override
 		public Collection<? extends GrantedAuthority> getAuthorities() {
-			return Arrays.asList(new SimpleGrantedAuthority(ROLE_PREFIX + "ADMIN"));
+			List<GrantedAuthority> authorities = new ArrayList<>();
+			
+			if(workerEntity.isAdmin()) {
+				authorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + "ADMIN"));
+			}
+			
+			return authorities;
 		}
 
 		@Override
