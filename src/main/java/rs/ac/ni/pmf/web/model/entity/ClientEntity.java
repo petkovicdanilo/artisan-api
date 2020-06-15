@@ -47,8 +47,8 @@ public class ClientEntity {
 	@OneToMany(
 		mappedBy = "client", 
 		fetch = FetchType.LAZY,
-		cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST },
-		orphanRemoval = false)
+		cascade = CascadeType.ALL,
+		orphanRemoval = true)
 	private List<RepairEntity> repairs = new ArrayList<>();
 	
 	@PreRemove
