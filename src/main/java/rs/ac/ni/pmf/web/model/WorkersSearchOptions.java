@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class WorkersSearchOptions {
 	private String username;
+	private Boolean isAdmin;
 	private String email;
 	private String firstName;
 	private String lastName;

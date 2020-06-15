@@ -11,6 +11,7 @@ import rs.ac.ni.pmf.web.exception.DuplicateResourceException;
 import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
 import rs.ac.ni.pmf.web.model.WorkersSearchOptions;
 import rs.ac.ni.pmf.web.model.api.WorkerDTO;
+import rs.ac.ni.pmf.web.model.api.WorkerSaveDTO;
 import rs.ac.ni.pmf.web.service.WorkersService;
 
 @RestController
@@ -31,12 +32,12 @@ public class WorkersRestControllerImpl implements WorkersRestController {
 	}
 
 	@Override
-	public WorkerDTO saveWorker(WorkerDTO worker) throws BadRequestException, DuplicateResourceException {
+	public WorkerDTO saveWorker(WorkerSaveDTO worker) throws BadRequestException, DuplicateResourceException {
 		return workersService.save(worker);
 	}
 
 	@Override
-	public WorkerDTO updateWorker(String username, WorkerDTO worker) throws ResourceNotFoundException {
+	public WorkerDTO updateWorker(String username, WorkerSaveDTO worker) throws ResourceNotFoundException {
 		return workersService.update(username, worker);
 	}
 

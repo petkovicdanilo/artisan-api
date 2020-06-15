@@ -3,6 +3,7 @@ package rs.ac.ni.pmf.web.model.mapper;
 import org.springframework.stereotype.Component;
 
 import rs.ac.ni.pmf.web.model.api.WorkerDTO;
+import rs.ac.ni.pmf.web.model.api.WorkerSaveDTO;
 import rs.ac.ni.pmf.web.model.entity.WorkerEntity;
 
 @Component
@@ -11,6 +12,7 @@ public class WorkersMapper {
 	public WorkerDTO toDto(WorkerEntity workerEntity) {
 		return WorkerDTO.builder()
 				.username(workerEntity.getUsername())
+				.isAdmin(workerEntity.isAdmin())
 				.firstName(workerEntity.getFirstName())
 				.lastName(workerEntity.getLastName())
 				.email(workerEntity.getEmail())
@@ -18,9 +20,10 @@ public class WorkersMapper {
 				.build();
 	}
 	
-	public WorkerEntity toEntity(WorkerDTO workerDto) {
+	public WorkerEntity toEntity(WorkerSaveDTO workerDto) {
 		return WorkerEntity.builder()
 				.username(workerDto.getUsername())
+				.isAdmin(workerDto.isAdmin())
 				.firstName(workerDto.getFirstName())
 				.lastName(workerDto.getLastName())
 				.email(workerDto.getEmail())

@@ -11,6 +11,7 @@ import rs.ac.ni.pmf.web.exception.ErrorInfo.ResourceType;
 import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
 import rs.ac.ni.pmf.web.model.WorkersSearchOptions;
 import rs.ac.ni.pmf.web.model.api.WorkerDTO;
+import rs.ac.ni.pmf.web.model.api.WorkerSaveDTO;
 import rs.ac.ni.pmf.web.model.entity.WorkerEntity;
 import rs.ac.ni.pmf.web.model.mapper.WorkersMapper;
 import rs.ac.ni.pmf.web.repository.WorkersRepository;
@@ -57,7 +58,7 @@ public class WorkersService {
 		return workersMapper.toDto(workerEntity);
 	}
 	
-	public WorkerDTO save(final WorkerDTO worker) throws BadRequestException, DuplicateResourceException {
+	public WorkerDTO save(final WorkerSaveDTO worker) throws BadRequestException, DuplicateResourceException {
 		if(worker.getUsername() == null) {
 			throw new BadRequestException("Bad request");
 		}
@@ -73,10 +74,11 @@ public class WorkersService {
 		return workersMapper.toDto(workerEntity);
 	}
 	
-	public WorkerDTO update(final String username, final WorkerDTO worker) throws ResourceNotFoundException {
+	public WorkerDTO update(final String username, final WorkerSaveDTO worker) throws ResourceNotFoundException {
 		final WorkerEntity workerEntity = workersRepository.findById(username)
 				.orElseThrow(() -> new ResourceNotFoundException(ResourceType.WORKER));
 		
+		workerEntity.setAdmin(worker.isAdmin());
 		workerEntity.setFirstName(worker.getFirstName());
 		workerEntity.setLastName(worker.getLastName());
 		workerEntity.setPhoneNumber(worker.getPhoneNumber());

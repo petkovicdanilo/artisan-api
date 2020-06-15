@@ -29,6 +29,12 @@ public class WorkerEntity {
 	@Column(length = 64)
 	private String username;
 	
+	@Column(name = "password", columnDefinition = "varchar(255)", nullable = false)
+	private String password;
+	
+	@Column(name = "is_admin", nullable = false)
+	private boolean isAdmin;
+	
 	@Column(unique = true, length = 64, nullable = false)
 	private String email;
 	

@@ -12,6 +12,7 @@ import lombok.Value;
 @Builder
 public class WorkerDTO {
 	private String username;
+	private boolean isAdmin;
 	private String email;
 	private String firstName;
 	private String lastName;

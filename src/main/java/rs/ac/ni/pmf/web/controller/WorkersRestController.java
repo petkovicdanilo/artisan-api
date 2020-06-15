@@ -1,5 +1,7 @@
 package rs.ac.ni.pmf.web.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +19,7 @@ import rs.ac.ni.pmf.web.exception.DuplicateResourceException;
 import rs.ac.ni.pmf.web.exception.ResourceNotFoundException;
 import rs.ac.ni.pmf.web.model.WorkersSearchOptions;
 import rs.ac.ni.pmf.web.model.api.WorkerDTO;
+import rs.ac.ni.pmf.web.model.api.WorkerSaveDTO;
 
 @RequestMapping(path = "/workers", produces = MediaType.APPLICATION_JSON_VALUE)
 public interface WorkersRestController {
@@ -30,13 +33,13 @@ public interface WorkersRestController {
 
 	@PostMapping(path = "")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	WorkerDTO saveWorker(@RequestBody WorkerDTO worker) 
+	WorkerDTO saveWorker(@RequestBody @Valid WorkerSaveDTO worker) 
 		throws BadRequestException, DuplicateResourceException;
 	
 	@PutMapping(path = "/{username}")
 	WorkerDTO updateWorker(
 		@PathVariable(name = "username", required = true) String username,
-		@RequestBody WorkerDTO worker
+		@RequestBody @Valid WorkerSaveDTO worker
 	)
 		throws ResourceNotFoundException;
 	

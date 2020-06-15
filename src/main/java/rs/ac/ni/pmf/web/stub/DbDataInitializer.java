@@ -11,6 +11,7 @@
 //import rs.ac.ni.pmf.web.model.api.PartDTO;
 //import rs.ac.ni.pmf.web.model.api.RepairDTO;
 //import rs.ac.ni.pmf.web.model.api.WorkerDTO;
+//import rs.ac.ni.pmf.web.model.api.WorkerSaveDTO;
 //import rs.ac.ni.pmf.web.service.ChangedPartsService;
 //import rs.ac.ni.pmf.web.service.ClientsService;
 //import rs.ac.ni.pmf.web.service.PartsService;
@@ -54,33 +55,36 @@
 //		client2 = clientsService.save(client2);
 //		client3 = clientsService.save(client3);
 //		
-//		WorkerDTO worker1 = WorkerDTO.builder()
+//		WorkerSaveDTO workerSave1 = WorkerSaveDTO.builder()
 //				.username("worker1")
+//				.password("worker1pass")
 //				.firstName("workerFirstName1")
 //				.lastName("workerLastName1")
 //				.email("worker1@artisan-api.com")
 //				.phoneNumber("111-222")
 //				.build();
 //		
-//		WorkerDTO worker2 = WorkerDTO.builder()
+//		WorkerSaveDTO workerSave2 = WorkerSaveDTO.builder()
 //				.username("worker2")
+//				.password("worker2pass")
 //				.firstName("workerFirstName2")
 //				.lastName("workerLastName2")
 //				.email("worker2@artisan-api.com")
 //				.phoneNumber("222-333")
 //				.build();
 //		
-//		WorkerDTO worker3 = WorkerDTO.builder()
+//		WorkerSaveDTO workerSave3 = WorkerSaveDTO.builder()
 //				.username("worker3")
+//				.password("worker3pass")
 //				.firstName("workerFirstName3")
 //				.lastName("workerLastName3")
 //				.email("worker3@artisan-api.com")
 //				.phoneNumber("333-444")
 //				.build();
 //		
-//		worker1 = workersService.save(worker1);
-//		worker2 = workersService.save(worker2);
-//		worker3 = workersService.save(worker3);
+//		WorkerDTO worker1 = workersService.save(workerSave1);
+//		WorkerDTO worker2 = workersService.save(workerSave2);
+//		WorkerDTO worker3 = workersService.save(workerSave3);
 //		
 //		PartDTO part1 = PartDTO.builder()
 //				.name("part1")

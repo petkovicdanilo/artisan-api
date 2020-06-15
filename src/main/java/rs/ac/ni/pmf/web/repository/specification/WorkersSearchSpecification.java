@@ -32,6 +32,7 @@ public class WorkersSearchSpecification implements Specification<WorkerEntity> {
 		final List<Predicate> predicates = new ArrayList<>();
 		
 		final Path<String> username = root.get(WorkerEntity_.username);
+		final Path<Boolean> isAdmin = root.get(WorkerEntity_.isAdmin);
 		final Path<String> email = root.get(WorkerEntity_.email);
 		final Path<String> firstName = root.get(WorkerEntity_.firstName);
 		final Path<String> lastName = root.get(WorkerEntity_.lastName);
@@ -43,6 +44,11 @@ public class WorkersSearchSpecification implements Specification<WorkerEntity> {
 				criteriaBuilder.lower(username),
 				"%" + usernameFilter.toLowerCase() + "%"
 			));
+		}
+		
+		final Boolean isAdminFilter = searchOptions.getIsAdmin();
+		if(isAdminFilter != null) {
+			predicates.add(criteriaBuilder.equal(isAdmin, isAdminFilter));
 		}
 		
 		final String emailFilter = searchOptions.getEmail();
