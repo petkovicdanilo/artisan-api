@@ -1,5 +1,7 @@
 package rs.ac.ni.pmf.web.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,12 +30,12 @@ public interface ClientsRestController {
 	
 	@PostMapping(path = "")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	ClientDTO saveClient(@RequestBody ClientDTO client);
+	ClientDTO saveClient(@RequestBody @Valid ClientDTO client);
 	
 	@PutMapping(path = "/{id}")
 	ClientDTO updateClient(
 		@PathVariable(name = "id", required = true) int id,
-		@RequestBody ClientDTO client
+		@RequestBody @Valid ClientDTO client
 	)
 		throws ResourceNotFoundException;
 	

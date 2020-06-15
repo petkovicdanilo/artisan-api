@@ -44,7 +44,7 @@ public class RepairEntity {
 	private WorkerEntity assignee;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "client_id", nullable = true)
+	@JoinColumn(name = "client_id", nullable = false)
 	private ClientEntity client;
 	
 	@Column(nullable = false)

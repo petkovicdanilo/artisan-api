@@ -1,5 +1,7 @@
 package rs.ac.ni.pmf.web.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -39,14 +41,14 @@ public interface ChangedPartsRestController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 	ChangedPartDTO saveChangedPart(
 		@PathVariable(name = "repairId", required = true) int repairId,
-		@RequestBody ChangedPartDTO changedPart
+		@RequestBody @Valid ChangedPartDTO changedPart
 	)
 		throws BadRequestException, DuplicateResourceException, ResourceNotFoundException;
 	
 	@PutMapping(path = "/{partId}")
 	ChangedPartDTO updateChangedPart(
 		@PathVariable(name = "repairId", required = true) int repairId,
-		@RequestBody ChangedPartDTO changedPart
+		@RequestBody @Valid ChangedPartDTO changedPart
 	)
 		throws BadRequestException, DuplicateResourceException, ResourceNotFoundException;
 	

@@ -1,5 +1,7 @@
 package rs.ac.ni.pmf.web.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,12 +30,12 @@ public interface PartsRestController {
 	
 	@PostMapping(path = "")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	PartDTO savePart(@RequestBody PartDTO part);
+	PartDTO savePart(@RequestBody @Valid PartDTO part);
 	
 	@PutMapping(path = "/{id}")
 	PartDTO updatePart(
 		@PathVariable(name = "id", required = true) int id,
-		@RequestBody PartDTO part
+		@RequestBody @Valid PartDTO part
 	)
 		throws ResourceNotFoundException;
 	

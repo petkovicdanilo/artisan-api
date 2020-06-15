@@ -1,5 +1,7 @@
 package rs.ac.ni.pmf.web.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -40,12 +42,12 @@ public interface RepairsRestController {
 	
 	@PostMapping(path = "/repairs")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	RepairDTO saveRepair(@RequestBody RepairDTO repair) throws ResourceNotFoundException;
+	RepairDTO saveRepair(@RequestBody @Valid RepairDTO repair) throws ResourceNotFoundException;
 	
 	@PutMapping(path = "/repairs/{id}")
 	RepairDTO updateRepair(
 			@PathVariable(name = "id", required = true) int id,
-			@RequestBody RepairDTO repair
+			@RequestBody @Valid RepairDTO repair
 	)
 		throws ResourceNotFoundException;
 	

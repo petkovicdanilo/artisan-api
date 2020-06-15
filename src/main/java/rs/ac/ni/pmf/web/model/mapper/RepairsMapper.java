@@ -14,10 +14,6 @@ import rs.ac.ni.pmf.web.model.entity.WorkerEntity;
 public class RepairsMapper {
 
 	public RepairDTO toDto(RepairEntity repairEntity) {
-		Integer clientId = repairEntity.getClient() == null ?
-				null :
-				repairEntity.getClient().getId();
-		
 		String assigneeUsername = repairEntity.getAssignee() == null ?
 				null :
 				repairEntity.getAssignee().getUsername();
@@ -26,7 +22,7 @@ public class RepairsMapper {
 				.id(repairEntity.getId())
 				.failureDescription(repairEntity.getFailureDescription())
 				.additionalCost(repairEntity.getAdditionalCost())
-				.clientId(clientId)
+				.clientId(repairEntity.getId())
 				.assigneeUsername(assigneeUsername)
 				.reported(repairEntity.getReported())
 				.finished(repairEntity.getFinished())
