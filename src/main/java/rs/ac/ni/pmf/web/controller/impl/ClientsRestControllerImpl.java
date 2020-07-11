@@ -35,8 +35,7 @@ public class ClientsRestControllerImpl implements ClientsRestController {
 
 	@Override
 	public ClientDTO updateClient(int id, ClientDTO client) throws ResourceNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		return clientsService.update(id, client);
 	}
 
 	@Override
