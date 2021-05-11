@@ -12,7 +12,7 @@
 	<description>REST API for artisan company</description>
 
 	<properties>
-		<spring.version>5.2.6.RELEASE</spring.version>
+		<spring.version>5.2.9.RELEASE</spring.version>
 		<spring.data.version>2.1.9.RELEASE</spring.data.version>
 		<spring.security.version>5.3.2.RELEASE</spring.security.version>
 		<hibernate.version>5.4.15.Final</hibernate.version>
