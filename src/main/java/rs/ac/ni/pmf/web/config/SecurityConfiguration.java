@@ -25,13 +25,16 @@ import rs.ac.ni.pmf.web.exception.ErrorInfo.ResourceType;
 @EnableWebSecurity
 @Slf4j
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-    private static final String[] SWAGGER_WHITELIST = {
-        "/swagger-resources/**",
-        "/swagger-ui.html",
-        "/v2/api-docs",
-        "/webjars/**"
-    };
+	
+	private static final String[] SWAGGER_WHITELIST = {
+			"/swagger-ui.html",
+			"/swagger-ui-bundle.js",
+			"/swagger-ui-standalone-preset.js",
+			"/springfox.js",
+	        "/v2/api-docs",
+	        "/webjars/**",
+	        "/swagger-resources/**"
+	    };
 	
 	@Autowired
 	private ObjectMapper objectMapper;
@@ -47,15 +50,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http
 				.csrf().disable()
 				.authorizeRequests()
-//					.antMatchers(SWAGGER_WHITELIST)
-//						.permitAll()
-//					.antMatchers(HttpMethod.GET, "/services/rest/*/**")
-//						.permitAll()
-//					.antMatchers("/services/rest/workers/*/**")
-//						.hasRole("ADMIN")
-					.anyRequest()
-//						.authenticated()
+					.antMatchers("/services/rest/workers/*/**")
+						.hasRole("ADMIN")
+					.antMatchers(HttpMethod.GET, SWAGGER_WHITELIST)
 						.permitAll()
+					.antMatchers(HttpMethod.GET, "/services/rest/*/**")
+						.permitAll()
+					.anyRequest()
+						.authenticated()
+//						.permitAll()
 				.and()
 				.httpBasic()
 				.authenticationEntryPoint((request, response, e) -> {
